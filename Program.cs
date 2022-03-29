@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Tic_Tac_Toe
 {
@@ -242,11 +242,11 @@ namespace Tic_Tac_Toe
             return -1;
         }//end function
 
-        static int winCheck(string[,] gameBoard, string markerX, string markerO, double gameTurns)
+        static int winCheck(string[,] gameBoard, string markerX, string markerO, int gameTurns)
         {
             
             //tie
-            if (gameTurns > 4.5)
+            if (gameTurns >= 9)
             {
                 Console.WriteLine("Its a tie!");
                 return 1;
@@ -278,7 +278,7 @@ namespace Tic_Tac_Toe
         static void GameLoop(string[,] gameBoard, int x_coord, int y_coord)
         {
             //counter for our game to see if we have a tie or not
-            double gameTurns = 0.5; 
+            int gameTurns = 0; 
 
             //if our return value from winCheck is -1 that means no one has won yet and continue playing on
             while (winCheck(gameBoard, "x", "o", gameTurns) == -1)
@@ -287,13 +287,30 @@ namespace Tic_Tac_Toe
                 //player 1
                 placeMarkerX(gameBoard, "x", x_coord, y_coord); 
 
-                //check if board has winner after player 1 turn. If player 1 has won it wont prompt player 2 to play. w/o this it will display the winner after player 2s turn.
-                winCheck( gameBoard, "x",  "o", gameTurns); 
+                //increase our counter
+                gameTurns++;
+
+                //check if board has winner after player 1 turn. If player 1 has won it wont prompt player 2 to play.
+                winCheck( gameBoard, "x",  "o", gameTurns);
+
+                //if player one has already won we should break out of the loop. if we dont, it will prompt player two to make one last move and then display
+                //the winning message AFTER players twos move move
+                if (CompleteRow(gameBoard) == 1 || (CompleteCol(gameBoard) == 2) || (CompleteDiagonal(gameBoard) == 3))
+                {
+                    break;
+                  
+                }//end if
+
+                //if we have a tie, break out of our loop
+                if (gameTurns == 9)
+                {
+                    break;
+                }
 
                 //player 2
-                placeMarkerO(gameBoard, "o", x_coord, y_coord); 
-              
-                //increase our counter
+                placeMarkerO(gameBoard, "o", x_coord, y_coord);
+
+                //increase counter again for second player move
                 gameTurns++;
 
                 //if our return value from winCheck is not -1 than someone has won and we should break out of our loop
@@ -311,7 +328,8 @@ namespace Tic_Tac_Toe
             return Console.ReadLine().ToLower();
         
         
-        }//end function
+        
+                }//end function
         static int PromptInt(string message)
         {
             //error checking. takes our input from the Prompt Function and if anything but a # is inputted this will turn to false
@@ -343,3 +361,4 @@ namespace Tic_Tac_Toe
         }//end function
     }//end class
 }//end namespace
+
