@@ -49,8 +49,7 @@ namespace Tic_Tac_Toe
 
             //ask user if they would like to play
             Console.WriteLine("\nPress 'enter' to play. ");
-            Console.ReadLine();
-     
+            Console.ReadLine();    
         }//end function
 
         static void placeMarkerX(string[,] gameBoard, string markerX, int x_coord, int y_coord)
@@ -59,10 +58,10 @@ namespace Tic_Tac_Toe
             string currentPos = " ";
 
             //get the length of our rows. grabs the elements in the first dimension of our array.
-            var rows = gameBoard.GetLength(0);
+            int rows = gameBoard.GetLength(0);
 
             //get the length of our columns. grabs the elements in the second dimension of our array.                      
-            var columns = gameBoard.GetLength(1);
+            int columns = gameBoard.GetLength(1);
 
             Console.WriteLine();
 
@@ -112,7 +111,6 @@ namespace Tic_Tac_Toe
 
                 }//end if
             }//end for loop
-
         }//end function
 
         static void placeMarkerO(string[,] gameBoard, string markerO, int x_coord, int y_coord)
@@ -121,10 +119,10 @@ namespace Tic_Tac_Toe
             string currentPos = " ";
 
             //get length of rows. grabs the elements in the first dimension of our array.
-            var rows = gameBoard.GetLength(0);
+            int rows = gameBoard.GetLength(0);
 
             //get length of columns. grabs the elements in the second dimension of our array.
-            var columns = gameBoard.GetLength(1);
+            int columns = gameBoard.GetLength(1);
 
             Console.WriteLine();
 
@@ -215,6 +213,7 @@ namespace Tic_Tac_Toe
                 //third column        
                 return 2;
             }
+
             return -1;
         }//end function
         static int CompleteDiagonal(string[,] gameBoard)
@@ -239,6 +238,7 @@ namespace Tic_Tac_Toe
                 //diagonal from top left to bottom right
                 return 3;
             }
+
             return -1;
         }//end function
 
@@ -288,17 +288,15 @@ namespace Tic_Tac_Toe
                 placeMarkerX(gameBoard, "x", x_coord, y_coord); 
 
                 //increase our counter
-                gameTurns++;
+                gameTurns++;                
 
-                //check if board has winner after player 1 turn. If player 1 has won it wont prompt player 2 to play.
-                winCheck( gameBoard, "x",  "o", gameTurns);
-
-                //if player one has already won we should break out of the loop. if we dont, it will prompt player two to make one last move and then display
-                //the winning message AFTER players twos move move
+                //after player ones move, check the board for a win, if we have one break out the loop.
                 if (CompleteRow(gameBoard) == 1 || (CompleteCol(gameBoard) == 2) || (CompleteDiagonal(gameBoard) == 3))
                 {
+                    //check if board has winner after player 1 turn. If player 1 has won it wont prompt player 2 to play.
+                    winCheck( gameBoard, "x",  "o", gameTurns);
                     break;
-                  
+
                 }//end if
 
                 //if we have a tie, break out of our loop
@@ -307,7 +305,7 @@ namespace Tic_Tac_Toe
                     break;
                 }
 
-                //player 2
+                //player 2 move now if above conditions are not true
                 placeMarkerO(gameBoard, "o", x_coord, y_coord);
 
                 //increase counter again for second player move
@@ -361,4 +359,3 @@ namespace Tic_Tac_Toe
         }//end function
     }//end class
 }//end namespace
-
